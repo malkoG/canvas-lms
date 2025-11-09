@@ -22,6 +22,8 @@ services:
     environment:
       POSTGRES_PASSWORD: sekret
       ADDITIONAL_ALLOWED_HOSTS: canvas.kodingwarrior.dev
+    networks:
+      - webnet
 
   jobs:
     <<: *WEB
