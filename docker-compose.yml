@@ -6,17 +6,47 @@ services:
     links:
       - postgres
       - redis
+    command: bundle exec rails s -b 0.0.0.0 -p 5050
+    volumes:
+      - "./app:/usr/src/app/app"
+      - "./db:/usr/src/app/db"
+      - "./config:/usr/src/app/config"
+      - "./ui:/usr/src/app/ui"
+      - "./ui-build:/usr/src/app/ui-build"
+      - "./node_modules/:/usr/src/app/node_modules"
+      - "./public:/usr/src/app/public"
+      - "./log:/usr/src/app/log"
+      - "./lib:/usr/src/app/lib"
+    ports:
+      - "5050:5050"
     environment:
       POSTGRES_PASSWORD: sekret
+      ADDITIONAL_ALLOWED_HOSTS: canvas.kodingwarrior.dev
 
   jobs:
     <<: *WEB
     command: bundle exec script/delayed_job run
+    ports: []
+    networks:
+      - webnet
 
   postgres:
     build: ./docker-compose/postgres
     environment:
       POSTGRES_PASSWORD: sekret
+    networks:
+      - webnet
+    volumes:
+      - postgres:/var/lib/postgresql/data
 
   redis:
     image: redis:alpine
+    networks:
+      - webnet
+
+networks:
+  webnet:
+    driver: bridge
+volumes:
+  postgres:
+
