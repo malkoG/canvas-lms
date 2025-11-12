@@ -17,6 +17,7 @@ services:
       - "./public:/usr/src/app/public"
       - "./log:/usr/src/app/log"
       - "./lib:/usr/src/app/lib"
+      - "./script:/usr/src/app/script"
     ports:
       - "5050:5050"
     environment:
