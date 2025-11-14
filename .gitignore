@@ -18,7 +18,6 @@
 /.yardoc/
 /.ruby-version
 /app/views/info/styleguide.html.erb
-/config/*.yml
 /config/*.yml.cached
 /config/credentials.yml.enc
 !/config/brakeman.yml
